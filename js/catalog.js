@@ -29,6 +29,7 @@ function handleSubmit(event) {
   event.preventDefault();
 
   // Do all the things ...
+ 
   addSelectedItemToCart();
   cart.saveToLocalStorage();
   updateCounter();
@@ -47,13 +48,20 @@ function addSelectedItemToCart() {
   console.log(cart);
 }
 
-// TODO: Update the cart count in the header nav with the number of items in the Cart
-function updateCounter() {}
+// DONE: Update the cart count in the header nav with the number of items in the Cart
+function updateCounter() {
+  document.getElementById('itemCount').textContent = `: ${cart.items.length} items(s)`;
+
+
+}
 
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
 function updateCartPreview() {
   // TODO: Get the item and quantity from the form
+  // same as above
+
   // TODO: Add a new element to the cartContents div with that information
+  // create a new element, give it content, append to parent of our choice
 }
 
 // Set up the "submit" event listener on the form.
@@ -64,4 +72,18 @@ catalogForm.addEventListener('submit', handleSubmit);
 
 // Before anything else of value can happen, we need to fill in the select
 // drop down list in the form.
+
+// Somehow this is allowing us to dynamically update our cart after viewing it
+function loadCart() {
+  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  // let cart = new Cart(cartItems);
+  
+  console.log(cartItems);
+  for (let i = 0; i < cartItems.length; i++) {
+    cart.addItem(cartItems[i].product, cartItems[i].quantity);
+    console.log(cartItems[i].product);
+
+  }
+}
+loadCart();
 populateForm();
